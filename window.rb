@@ -7,7 +7,7 @@ class SimWindow < Gosu::Window
 
 
 	def initialize sim
-		@window_size = 640
+		@window_size = 800
 		super @window_size, @window_size
 		self.caption = "Planet Simulation"
 	
@@ -19,10 +19,12 @@ class SimWindow < Gosu::Window
 		
 		@planets = []
 		@planets_data.each { |planet| @planets.push(Planet.new(planet, @lines[1].to_f*2, @window_size)) }
+
+		@planets.each { |planet| planet.warp(width/2.0, height/2.0) }
 	end
 
 	def update
-
+		@planets.each { |planet| planet.move(@planets) }
 	end
 
 	def draw
@@ -32,6 +34,10 @@ class SimWindow < Gosu::Window
 
 	def button_down id
 		close if id == Gosu::KbEscape
+	end
+
+	def update
+		@planets.each
 	end
 
 end
